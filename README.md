@@ -9,7 +9,7 @@
 <p align="center">“Nunca se compare com ninguém neste mundo. Caso o faça, entenda que você estará insultando a si mesmo”</blockquote>
 
 <p align="center">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/TainaIsabela/Ignite-Node-Desafio-2?style=flat">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/TainaIsabela/Ignite-Node-Desafio-1?style=flat">
 
   <a href="https://rocketseat.com.br">
     <img alt="Made by Tainá Isabela" src="https://img.shields.io/badge/made%20by-Tainá%20Isabela-orange">
