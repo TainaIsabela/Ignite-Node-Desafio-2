@@ -3,7 +3,7 @@
 <img alt="Ignite" src="./assets/cover-node.js.png" />
 
 <h3 align="center">
-  Desafio 02: Trabalhando com Middlewares
+  Chapter 02: Introdução ao SOLID e Documentação com Swagger
 </h3>
 
 <p align="center">“Nunca se compare com ninguém neste mundo. Caso o faça, entenda que você estará insultando a si mesmo”</blockquote>
@@ -27,26 +27,15 @@
   <a href="#rocket-sobre-o-desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#keyboard-instalação-e-execução-do-projeto">Instalação e Execução do Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#template-da-aplicação">Template da aplicação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#middlewares-da-aplicação-instruções">Middlewares da aplicação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#especificação-dos-testes-instruções">Específicação dos testes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#rotas-da-aplicação">Rotas da aplicação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#especificação-dos-testes">Específicação dos testes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#Testes-das-rotas">Testes-das-rotas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#memo-licença">Licença</a>
 </p>
 
 ## :rocket: Sobre o desafio
 
-Nesse desafio trabalhei mais a fundo com middlewares no Express. Dessa forma, fui capaz de fixar mais ainda os conhecimentos obtidos até agora. 
-
-Para facilitar um pouco mais do conhecimento da regra de negócio, trabalhei com a mesma aplicação do desafio anterior: uma aplicação para gerenciar tarefas (ou *todos*) mas com algumas mudanças: **[Desafio 1 - Conceitos do Node.js](https://github.com/TainaIsabela/Ignite-Conceitos-Nodejs)**
-
-Será permitida a criação de um usuário com `name` e `username`, bem como fazer o CRUD de *todos*:
-
-- Criar um novo *todo*;
-- Listar todos os *todos*;
-- Alterar o `title` e `deadline` de um *todo* existente;
-- Marcar um *todo* como feito;
-- Excluir um *todo*;
-
-Tudo isso para cada usuário em específico. Além disso, dessa vez tem um plano grátis onde o usuário só pode criar até dez *todos* e um plano Pro que irá permitir criar *todos* ilimitados, isso tudo usando middlewares para fazer as validações necessárias.
+Essa será uma aplicação de listagem e cadastro de usuários. Para que a listagem de usuários funcione, o usuário que solicita a listagem deve ser um admin (mais detalhes ao longo da descrição). Utilizando essa aplicação já funcional como base, realizei a documentação das rotas com o Swagger.
 
 ### :keyboard: Instalação e Execução do Projeto
 
@@ -85,106 +74,138 @@ yarn dev
 
 Foi utilizado um modelo de template que possui o esqueleto do projeto.
 
-O template pode ser encontrado na seguinte url: **[Acessar Template](https://github.com/rocketseat-education/ignite-template-trabalhando-com-middlewares)**
+O template pode ser encontrado na seguinte url: **[Acessar Template](https://github.com/rocketseat-education/ignite-template-introducao-ao-SOLID)**
 
 > **Dica**: Caso não saiba utilizar repositórios do Github como template, utilize o guia em **[nosso FAQ](https://www.notion.so/ddd8fcdf2339436a816a0d9e45767664).**
 
 Agora navegue até a pasta criada e abra no Visual Studio Code, lembre-se de executar o comando `yarn` no seu terminal para instalar todas as dependências.
 
-### Middlewares da aplicação (Instruções)
-
-Documentação no Notion sobre os middlewares e testes: **[Documentação Middlewares e Testes](https://www.notion.so/Desafio-02-Trabalhando-com-middlewares-4f89bf538c2e4ee291382b92bdc36790)**
-
-Com o template já clonado e o arquivo `index.js` aberto, você deve completar onde não possui código com o código para atingir os objetivos de cada teste.
-
-Nesse desafio não será necessário alterar o código de nenhuma rota, **apenas dos middlewares**. Os testes iram também testar o funcionamento das rotas mas o resultado depende apenas da dos middlewares.
-
-Aqui teremos uma breve descrição do que cada middleware deve fazer e na seção [Especificação dos testes](https://www.notion.so/Desafio-02-Trabalhando-com-middlewares-4f89bf538c2e4ee291382b92bdc36790) você verá com mais detalhes o que precisa ser feito para satisfazer cada teste.
-
-#### checksExistsUserAccount
-
-Esse middleware é responsável por receber o username do usuário pelo header e validar se existe ou não um usuário com o username passado. Caso exista, o usuário deve ser repassado para o request e a função next deve ser chamada.
-
-#### checksCreateTodosUserAvailability
-
-Esse middleware deve receber o **usuário** já dentro do request e chamar a função next apenas se esse usuário ainda estiver no **plano grátis e ainda não possuir 10 *todos* cadastrados** ou se ele **já estiver com o plano Pro ativado**. 
-
-#### checksTodoExists
-
-Esse middleware deve receber o **username** de dentro do header e o **id** de um *todo* de dentro de `request.params`. Você deve validar o usuário, validar que o `id` seja um uuid e também validar que esse `id` pertence a um *todo* do usuário informado.
-
-Com todas as validações passando, o *todo* encontrado deve ser passado para o `request` assim como o usuário encontrado também e a função next deve ser chamada.
-
-#### findUserById
-
-Esse middleware possui um funcionamento semelhante ao middleware `checksExistsUserAccount` mas a busca pelo usuário deve ser feita através do **id** de um usuário passado por parâmetro na rota. Caso o usuário tenha sido encontrado, o mesmo deve ser repassado para dentro do `request.user` e a função next deve ser chamada.
+### Rotas da aplicação
 
 
-### Especificação dos testes (Instruções)
+#### **POST/users**
 
-Em cada teste, tem uma breve descrição no que sua aplicação deve cumprir para que o teste passe.
+A rota deve receber name, e email dentro do corpo da requisição para que seja possível cadastrar um usuário.
 
-> :bulb: Caso você tenha dúvidas quanto ao que são os testes, e como interpretá-los, dê uma olhada em **[nosso FAQ](https://www.notion.so/FAQ-Desafios-ddd8fcdf2339436a816a0d9e45767664)**
 
+#### **PATCH /users/:user_id/admin**
+
+A rota deve receber name, e email dentro do corpo da requisição para que seja possível cadastrar um usuário.
+
+#### **GET /users/:user_id/admin**
+
+A rota deve receber, nos parâmetros da rota, o id de um usuário e devolver as informações do usuário encontrado pelo corpo da resposta.
+#### **GET /users/**
+
+A rota deve receber, pelo header da requisição, uma propriedade user_id contendo o id do usuário e retornar uma lista com todos os usuários cadastrados. O id deverá ser usado para validar se o usuário que está solicitando a listagem é um admin. O retorno da lista deve ser feito apenas se o usuário for admin. 
+
+## Especificação dos testes
+
+Em cada teste, tem uma breve descrição no que sua aplicação deve cumprir para que o teste passe.
 Para esse desafio, temos os seguintes testes:
 
-#### Testes dos middlewares
+## Testes do model
 
-- **Should be able to find user by username in header and pass it to request.user**
+- **Should be able to create an user with all props**
 
-    Para que esse teste passe, você deve permitir que o middleware **checksExistsUserAccount** receba um username pelo header do request e caso um usuário com o mesmo username exista, ele deve ser colocado dentro de `request.user` e, ao final, retorne a chamada da função `next`.
+    Para que esse teste passe, você deve completar o código do model de usuários que está em src/modules/users/model/User.ts. O usuário deve ter as seguintes propriedades:
 
-    Atente-se bem para o nome da propriedade que armazenará o objeto `user` no request.
+```
+{
+  id: string;
 
-- **Should not be able to find a non existing user by username in header**
+  name: string;
 
-    Para que esse teste passe, no middleware **checksExistsUserAccount** você deve retornar uma resposta com status `404` caso o username passado pelo header da requisição não pertença a nenhum usuário. Você pode também retornar uma mensagem de erro mas isso é opcional.
+  admin: boolean;
 
-- **Should be able to let user create a new todo when is in free plan and have less than ten todos**
+  email: string;
 
-    Para que esse teste passe, você deve permitir que o middleware **checksCreateTodosUserAvailability** receba o objeto `user` (considere sempre que o objeto existe) da `request` e chame a função `next` somente no caso do usuário estar no **plano grátis e ainda não possuir 10 *todos* cadastrados** ou se ele **já estiver com o plano Pro ativado**.
+  created_at: Date;
 
-    > :bulb: Você pode verificar se o usuário possui um plano Pro ou não a partir da propriedade `user.pro`. Caso seja `true` significa que o plano Pro está em uso.
+  updated_at: Date;
+}
+```
+    
+## Testes do repositório
+- **Should be able to create new users**
 
-- **Should not be able to let user create a new todo when is not Pro and already have ten todos**
+    Para que esse teste passe, é necessário que o método create do arquivo src/modules/users/repositories/implementations/UsersRepository permita receber o name e email de um usuário, crie um usuário a partir do model (que foi completado no teste anterior).
 
-    Para que esse teste passe, no middleware **checksCreateTodosUserAvailability** você deve retornar uma resposta com status `403` caso o usuário recebido pela requisição esteja no **plano grátis** e **já tenha 10 *todos* cadastrados**. Você pode também retornar uma mensagem de erro mas isso é opcional.
+- **Should be able to list all users**
 
-- **Should be able to let user create infinite new todos when is in Pro plan**
+    Para que esse teste passe, é necessário que o método list do arquivo src/modules/users/repositories/implementations/UsersRepository retorne a lista de todos os usuários cadastrados na aplicação.
 
-    Para que esse teste passe, você deve permitir que o middleware **checksCreateTodosUserAvailability** receba o objeto `user` (considere sempre que o objeto existe) da `request` e chame a função `next` caso o usuário já esteja com o plano Pro. 
+- **Should be able to find user by ID**
 
-    >  :bulb: Se você satisfez os dois testes anteriores antes desse, ele já deve passar também.
+    Para que esse teste passe, é necessário que o método findByEmail do arquivo src/modules/users/repositories/implementations/UsersRepository receba o email de um usuário e retorne o usuário que possui o mesmo email.
 
-- **Should be able to put user and todo in request when both exits**
+- **Should be able to turn an user as admin**
 
-    Para que esse teste passe, o middleware **checksTodoExists** deve receber o `username` de dentro do header e o `id` de um *todo* de dentro de `request.params`. Você deve validar que o usuário exista, validar que o `id` seja um uuid e também validar que esse `id` pertence a um *todo* do usuário informado.
+    Para que esse teste passe, é necessário que o método turnAdmin do arquivo src/modules/users/repositories/implementations/UsersRepository receba o objeto do usuário completo, mude a propriedade admin para true, atualize também a propriedade updated_at  e retorne o usuário atualizado.
 
-    Com todas as validações passando, o *todo* encontrado deve ser passado para o `request` assim como o usuário encontrado também e a função next deve ser chamada.
 
-    É importante que você coloque dentro de `request.user` o usuário encontrado e dentro de `request.todo` o *todo* encontrado.
 
-- **Should not be able to put user and todo in request when user does not exists**
+## Testes de useCases
 
-    Para que esse teste passe, no middleware **checksTodoExists** você deve retornar uma resposta com status `404` caso não exista um usuário com o `username` passado pelo header da requisição.
 
-- **Should not be able to put user and todo in request when todo id is not uuid**
+- **Should be able to create new users**
 
-    Para que esse teste passe, no middleware **checksTodoExists** você deve retornar uma resposta com status `400` caso o `id` do *todo* passado pelos parâmetros da requisição não seja um UUID válido (por exemplo `1234abcd`).
+    Para que esse teste passe, é necessário que o método `execute` do arquivo **src/modules/users/useCases/createUser/CreateUserUseCase.ts** receba `name` e `email` do usuário a ser criado, crie o usuário através do método `create` do repositório e retorne o usuário criado.
 
-- **Should not be able to put user and todo in request when todo does not exists**
+- **Should not be able to create new users when email is already taken**
 
-    Para que esse teste passe, no middleware **checksTodoExists** você deve retornar uma resposta com status `404` caso o `id` do *todo* passado pelos parâmetros da requisição não pertença a nenhum *todo* do usuário encontrado.
+    Para que esse teste passe, é necessário que o método `execute` do arquivo **src/modules/users/useCases/createUser/CreateUserUseCase.ts** não permita que um usuário seja criado caso já exista um usuário com o mesmo email e, nesse caso, lance um erro no seguinte formato:
 
-- **Should be able to find user by id route param and pass it to request.user**
+    ```
+    throw new Error("Mensagem do erro");
+    ```
 
-    Para que esse teste passe, o middleware **findUserById** deve receber o `id` de um usuário de dentro do `request.params`. Você deve validar que o usuário exista, repassar ele para `request.user` e retornar a chamada da função next.
 
-- **Should not be able to pass user to request.user when it does not exists**
+- **Should be able to turn an user as admin**
 
-    Para que esse teste passe, no middleware **findUserById** você deve retornar uma resposta com status `404` caso o `id` do usuário **passado pelos parâmetros da requisição não pertença a nenhum usuário cadastrado.
+    Para que esse teste passe, é necessário que o método execute do arquivo src/modules/users/useCases/turnUserAdmin/TurnUserAdminUseCase.ts receba o id de um usuário, chame o método do repositório que transforma esse usuário em administrador e retorne o usuário após a alteração.
 
----
+- **Should not be able to turn a non existing user as admin**
+
+    Para que esse teste passe, é necessário que o método execute do arquivo src/modules/users/useCases/turnUserAdmin/TurnUserAdminUseCase.ts não permita que um usuário que não existe seja transformado em admin. Caso o usuário não exista, lance um erro no seguinte formato:
+
+    ```
+    throw new Error("Mensagem do erro");
+    ```
+
+- **Should be able to get user profile by ID**
+
+   Para que esse teste passe, é necessário que o método execute do arquivo src/modules/users/useCases/showUserProfile/ShowUserProfileUseCase.ts receba o id de um usuário, chame o método do repositório que busca um usuário pelo id e retorne o usuário encontrado.
+
+- **Should not be able to show profile of a non existing user**
+
+  Para que esse teste passe, é necessário que o método execute do arquivo src/modules/users/useCases/showUserProfile/ShowUserProfileUseCase.ts não permita que um usuário que não existe seja retornado. Caso o usuário não exista, lance um erro no seguinte formato:
+
+  ```
+    throw new Error("Mensagem do erro");
+  ```
+- **Should be able to list all users**
+
+   Para que esse teste passe, é necessário que o método execute do arquivo src/modules/users/useCases/listAllUsers/ListAllUsersUseCase.ts chame o método do repositório que retorna todos os usuários cadastrados e retorne essa informação.
+
+- **Should not be able to a non admin user get list of all users**
+
+  Para que esse teste passe, é necessário que o método execute do arquivo src/modules/users/useCases/listAllUsers/ListAllUsersUseCase.ts receba o id de um usuário e retorne a listagem de usuários cadastrados na aplicação apenas se o id recebido pertencer a um usuário admin.
+  Caso o usuário não seja admin, lance um erro no seguinte formato:
+
+  ```
+    throw new Error("Mensagem do erro");
+  ```
+
+- **Should not be able to a non existing user get list of all users**
+
+  Para que esse teste passe, é necessário que o método execute do arquivo src/modules/users/useCases/listAllUsers/ListAllUsersUseCase.ts não permita que um usuário que não exista, acesse a listagem de usuários cadastrados na aplicação. Caso o usuário não exista, lance um erro no seguinte formato:
+
+  ```
+    throw new Error("Mensagem do erro");
+  ```
+
+
 
 Todos os demais testes são os mesmos testes encontrados no desafio 01 com algumas (ou nenhuma) mudanças.
 
